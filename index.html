@@ -265,7 +265,6 @@
         <div class="clock-area" style="display: flex; align-items: center; gap: 20px;">
             <div style="text-align: right;">
                 <div id="digital-clock">00:00:00</div>
-                <div style="font-size: 14px; color: var(--text-dim);" id="current-date">-- --- ----</div>
             </div>
             <div class="settings-trigger" onclick="openSettings()">
                 <span class="material-icons" style="font-size: 32px;">settings</span>
@@ -454,7 +453,6 @@
         function updateClock() {
             const now = new Date();
             document.getElementById('digital-clock').innerText = now.toLocaleTimeString('tr-TR');
-            document.getElementById('current-date').innerText = now.toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric' });
         }
         setInterval(updateClock, 1000);
         updateClock();
