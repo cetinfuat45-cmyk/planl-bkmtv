@@ -141,6 +141,7 @@
             padding: 10px;
             display: flex;
             flex-direction: column;
+            align-items: center; /* Kartları yatayda ortala ve sıkıştır */
         }
 
         .list-container::-webkit-scrollbar { width: 6px; }
@@ -155,10 +156,10 @@
             transition: all 0.4s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
             border: 2px solid transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: auto; /* Sabit yükseklik kaldırıldı, metne göre uzayacak */
+            width: fit-content; /* Sadece metin kadar genişlik */
+            min-width: 100px;   /* Çok küçük metinlerde aşırı daralmaması için */
+            max-width: 95%;     /* Sütun dışına taşmaması için */
+            min-height: auto;
         }
 
         .item-card.is-pending {
