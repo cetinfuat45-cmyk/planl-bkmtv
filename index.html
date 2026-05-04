@@ -27,6 +27,8 @@
             --global-weight: 800;
             --modal-bg: #1e293b;
             --modal-text: #ffffff;
+            --header-bg: rgba(0, 0, 0, 0.4);
+            --panel-bg: rgba(15, 23, 42, 0.8);
         }
 
         * {
@@ -55,7 +57,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.4);
+            background: var(--header-bg);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--glass-border);
         }
@@ -100,7 +102,7 @@
         }
 
         .column-panel {
-            background: var(--bg-panel);
+            background: var(--panel-bg);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             display: flex;
@@ -411,13 +413,15 @@
             if (s.theme === 'white') {
                 root.style.setProperty('--bg-dark', '#ffffff');
                 root.style.setProperty('--text-main', '#000000');
-                root.style.setProperty('--bg-panel', 'rgba(0,0,0,0.05)');
+                root.style.setProperty('--panel-bg', '#f1f5f9');
+                root.style.setProperty('--header-bg', '#ffffff');
                 root.style.setProperty('--modal-bg', '#ffffff');
                 root.style.setProperty('--modal-text', '#000000');
                 document.body.style.backgroundImage = 'none';
             } else {
                 root.style.setProperty('--text-main', '#f8fafc');
-                root.style.setProperty('--bg-panel', 'rgba(15, 23, 42, 0.8)');
+                root.style.setProperty('--panel-bg', 'rgba(15, 23, 42, 0.8)');
+                root.style.setProperty('--header-bg', 'rgba(0, 0, 0, 0.4)');
                 root.style.setProperty('--modal-bg', '#1e293b');
                 root.style.setProperty('--modal-text', '#ffffff');
                 document.body.style.backgroundImage = ''; 
