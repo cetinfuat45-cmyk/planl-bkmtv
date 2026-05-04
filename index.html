@@ -85,10 +85,9 @@
         /* Dashboard Grid */
         .dashboard-grid {
             flex: 1;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            padding: 20px;
+            display: flex; /* Grid yerine Flex kullanarak boş sütunların küçülmesini sağlıyoruz */
+            gap: 15px;
+            padding: 15px;
             overflow: hidden;
         }
 
@@ -99,6 +98,14 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            flex: 1; /* Varsayılan olarak eşit dağıl */
+            transition: all 0.5s ease;
+            min-width: 150px;
+        }
+
+        .column-panel.has-no-pending {
+            flex: 0.6; /* İçinde bekleyen iş olmayan sütunlar biraz daha küçülsün */
+            opacity: 0.8;
         }
 
         .column-header {
@@ -143,8 +150,19 @@
         }
 
         .item-row.is-done {
-            border-left: 4px solid var(--done);
-            opacity: 0.8;
+            border-left: 3px solid var(--done);
+            opacity: 0.6;
+            padding: 6px 12px; /* Daha dar dikey alan */
+        }
+
+        .item-row.is-done .item-name {
+            font-size: 13px; /* Yazı boyutu küçüldü */
+            color: var(--text-dim);
+        }
+
+        .item-row.is-done .status-badge {
+            font-size: 9px;
+            padding: 2px 6px;
         }
 
         .item-name {
@@ -216,22 +234,22 @@
 
     <div class="dashboard-grid">
         <!-- Aylık -->
-        <div class="column-panel">
+        <div class="column-panel" id="panel-aylik">
             <div class="column-header ch-aylik">AYLIK BAKIMLAR</div>
             <div class="list-container" id="list-aylik"></div>
         </div>
         <!-- 3 Aylık -->
-        <div class="column-panel">
+        <div class="column-panel" id="panel-3aylik">
             <div class="column-header ch-3aylik">3 AYLIK BAKIMLAR</div>
             <div class="list-container" id="list-3aylik"></div>
         </div>
         <!-- 6 Aylık -->
-        <div class="column-panel">
+        <div class="column-panel" id="panel-6aylik">
             <div class="column-header ch-6aylik">6 AYLIK BAKIMLAR</div>
             <div class="list-container" id="list-6aylik"></div>
         </div>
         <!-- Yıllık -->
-        <div class="column-panel">
+        <div class="column-panel" id="panel-yillik">
             <div class="column-header ch-yillik">YILLIK BAKIMLAR</div>
             <div class="list-container" id="list-yillik"></div>
         </div>
@@ -261,21 +279,31 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.checklist) {
-                        renderList('list-aylik', data.checklist.aylik);
-                        renderList('list-3aylik', data.checklist.ucAylik);
-                        renderList('list-6aylik', data.checklist.altiAylik);
-                        renderList('list-yillik', data.checklist.yillik);
+                        renderList('list-aylik', data.checklist.aylik, 'panel-aylik');
+                        renderList('list-3aylik', data.checklist.ucAylik, 'panel-3aylik');
+                        renderList('list-6aylik', data.checklist.altiAylik, 'panel-6aylik');
+                        renderList('list-yillik', data.checklist.yillik, 'panel-yillik');
                     }
                     document.getElementById('last-sync').innerText = "Son Güncelleme: " + new Date().toLocaleTimeString('tr-TR');
                 })
                 .catch(err => console.error("Hata:", err));
         }
 
-        function renderList(id, items) {
+        function renderList(id, items, panelId) {
             const container = document.getElementById(id);
+            const panel = document.getElementById(panelId);
+            
             if (!items || items.length === 0) {
-                container.innerHTML = '<div style="text-align:center; color:var(--text-dim); padding:20px;">Kayıt yok.</div>';
+                container.innerHTML = '<div style="text-align:center; color:var(--text-dim); padding:20px; font-size:12px;">Kayıt yok.</div>';
+                if(panel) panel.classList.add('has-no-pending');
                 return;
+            }
+
+            // Bekleyen var mı kontrol et
+            const hasPending = items.some(i => !i.status);
+            if (panel) {
+                if (hasPending) panel.classList.remove('has-no-pending');
+                else panel.classList.add('has-no-pending');
             }
 
             // Önce BEKLEYENLER (FALSE), sonra YAPILANLAR (TRUE) gelsin
