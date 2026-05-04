@@ -412,12 +412,14 @@
             if (s.theme === 'navy') root.style.setProperty('--bg-dark', '#0f172a');
             if (s.theme === 'grey') root.style.setProperty('--bg-dark', '#334155');
             if (s.theme === 'white') {
-                root.style.setProperty('--bg-dark', '#f8fafc');
-                root.style.setProperty('--text-main', '#0f172a');
-                root.style.setProperty('--bg-panel', 'rgba(255,255,255,0.9)');
+                root.style.setProperty('--bg-dark', '#ffffff');
+                root.style.setProperty('--text-main', '#000000');
+                root.style.setProperty('--bg-panel', 'rgba(0,0,0,0.05)');
+                document.body.style.backgroundImage = 'none';
             } else {
                 root.style.setProperty('--text-main', '#f8fafc');
                 root.style.setProperty('--bg-panel', 'rgba(15, 23, 42, 0.8)');
+                document.body.style.backgroundImage = ''; // Varsayılan gradienti geri getir
             }
             
             setTheme(s.theme);
