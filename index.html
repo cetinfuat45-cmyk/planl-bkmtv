@@ -245,6 +245,11 @@
             display: flex; align-items: center; gap: 5px;
         }
         .settings-trigger:hover { opacity: 0.7; }
+        .fullscreen-btn {
+            cursor: pointer; color: var(--text-main); transition: opacity 0.3s;
+            display: flex; align-items: center;
+        }
+        .fullscreen-btn:hover { opacity: 0.7; }
     </style>
 </head>
 <body>
@@ -284,6 +289,11 @@
 
         <div class="clock-area" style="display: flex; align-items: center; gap: 15px;">
             <div id="digital-clock" style="font-family: 'Orbitron'; font-size: 24px; font-weight: 700;">00:00:00</div>
+            
+            <div class="fullscreen-btn" onclick="toggleFullscreen()">
+                <span class="material-icons" style="font-size: 24px;">fullscreen</span>
+            </div>
+
             <div class="settings-trigger" onclick="openSettings()">
                 <span class="material-icons" style="font-size: 24px;">settings</span>
             </div>
@@ -436,6 +446,16 @@
 
         // İlk Yükleme
         window.addEventListener('load', applySettings);
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Tam ekran hatası: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
 
         function updateClock() {
             const now = new Date();
