@@ -186,18 +186,18 @@
         }
 
 
-        /* Footer */
+        /* Header */
         .footer {
-            height: 60px; /* Biraz daha genişlettik */
+            height: 60px;
             padding: 0 30px;
-            background: var(--header-bg); /* Üst menü rengini alta aldık */
+            background: var(--header-bg);
             backdrop-filter: blur(15px);
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 14px;
             color: var(--text-main);
-            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border); /* Alt kenarlık */
         }
 
         .sync-info { display: flex; align-items: center; gap: 10px; }
@@ -252,29 +252,6 @@
     </style>
 </head>
 <body>
-    <div class="dashboard-grid">
-        <!-- Aylık -->
-        <div class="column-panel" id="panel-aylik">
-            <div class="column-header ch-aylik">AYLIK BAKIMLAR</div>
-            <div class="list-container" id="list-aylik"></div>
-        </div>
-        <!-- 3 Aylık -->
-        <div class="column-panel" id="panel-3aylik">
-            <div class="column-header ch-3aylik">3 AYLIK BAKIMLAR</div>
-            <div class="list-container" id="list-3aylik"></div>
-        </div>
-        <!-- 6 Aylık -->
-        <div class="column-panel" id="panel-6aylik">
-            <div class="column-header ch-6aylik">6 AYLIK BAKIMLAR</div>
-            <div class="list-container" id="list-6aylik"></div>
-        </div>
-        <!-- Yıllık -->
-        <div class="column-panel" id="panel-yillik">
-            <div class="column-header ch-yillik">YILLIK BAKIMLAR</div>
-            <div class="list-container" id="list-yillik"></div>
-        </div>
-    </div>
-
     <div class="footer">
         <div class="logo-area" style="gap: 10px;">
             <span class="material-icons logo-icon" style="font-size: 24px;">fact_check</span>
@@ -298,6 +275,30 @@
             </div>
         </div>
     </div>
+
+    <div class="dashboard-grid">
+        <!-- Aylık -->
+        <div class="column-panel" id="panel-aylik">
+            <div class="column-header ch-aylik">AYLIK BAKIMLAR</div>
+            <div class="list-container" id="list-aylik"></div>
+        </div>
+        <!-- 3 Aylık -->
+        <div class="column-panel" id="panel-3aylik">
+            <div class="column-header ch-3aylik">3 AYLIK BAKIMLAR</div>
+            <div class="list-container" id="list-3aylik"></div>
+        </div>
+        <!-- 6 Aylık -->
+        <div class="column-panel" id="panel-6aylik">
+            <div class="column-header ch-6aylik">6 AYLIK BAKIMLAR</div>
+            <div class="list-container" id="list-6aylik"></div>
+        </div>
+        <!-- Yıllık -->
+        <div class="column-panel" id="panel-yillik">
+            <div class="column-header ch-yillik">YILLIK BAKIMLAR</div>
+            <div class="list-container" id="list-yillik"></div>
+        </div>
+    </div>
+
 
     <!-- Settings Modal -->
     <div class="modal-overlay" id="settings-modal">
