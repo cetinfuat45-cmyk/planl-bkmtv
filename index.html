@@ -104,8 +104,20 @@
         }
 
         .column-panel.has-no-pending {
-            flex: 0.6; /* İçinde bekleyen iş olmayan sütunlar biraz daha küçülsün */
-            opacity: 0.8;
+            flex: 0.3; /* Çok daha fazla daral */
+            min-width: 100px;
+            max-width: 200px; /* Maksimum genişlik sınırı */
+            opacity: 0.4; /* Daha şeffaf */
+            filter: grayscale(0.5); /* Renkleri biraz soldur */
+        }
+
+        .column-panel.has-no-pending .column-header {
+            font-size: 12px; /* Başlık küçülsün */
+            padding: 10px 5px;
+        }
+        
+        .column-panel.has-no-pending .list-container {
+            display: none; /* İçerik çok kalabalık yapmasın, sadece başlık ve dar sütun kalsın */
         }
 
         .column-header {
