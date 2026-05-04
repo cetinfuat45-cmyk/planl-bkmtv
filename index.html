@@ -51,16 +51,7 @@
         }
 
         /* Header Area */
-        .header {
-            height: 80px;
-            padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--header-bg);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
-        }
+        .header { display: none; } /* Üst menüyü gizle */
 
         .logo-area {
             display: flex;
@@ -198,14 +189,16 @@
 
         /* Footer */
         .footer {
-            height: 35px;
+            height: 60px; /* Biraz daha genişlettik */
             padding: 0 30px;
-            background: rgba(0,0,0,0.1);
+            background: var(--header-bg); /* Üst menü rengini alta aldık */
+            backdrop-filter: blur(15px);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 14px;
             color: var(--text-main);
+            border-top: 1px solid var(--glass-border);
         }
 
         .sync-info { display: flex; align-items: center; gap: 10px; }
@@ -255,23 +248,6 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo-area">
-            <span class="material-icons logo-icon">fact_check</span>
-            <div class="title-group">
-                <h1>PLANLI BAKIM TAKİP TV</h1>
-            </div>
-        </div>
-        <div class="clock-area" style="display: flex; align-items: center; gap: 20px;">
-            <div style="text-align: right;">
-                <div id="digital-clock">00:00:00</div>
-            </div>
-            <div class="settings-trigger" onclick="openSettings()">
-                <span class="material-icons" style="font-size: 32px;">settings</span>
-            </div>
-        </div>
-    </div>
-
     <div class="dashboard-grid">
         <!-- Aylık -->
         <div class="column-panel" id="panel-aylik">
@@ -296,11 +272,22 @@
     </div>
 
     <div class="footer">
-        <div class="sync-info">
-            <div class="sync-dot"></div>
-            Sistem Bağlantısı Aktif | Veriler 60 sn'de bir güncellenir.
+        <div class="logo-area" style="gap: 10px;">
+            <span class="material-icons logo-icon" style="font-size: 24px;">fact_check</span>
+            <h1 style="font-family: 'Orbitron'; font-size: 16px;">PLANLI BAKIM TV</h1>
         </div>
-        <div id="last-sync">Son Güncelleme: --:--:--</div>
+
+        <div class="sync-info" style="font-size: 11px; opacity: 0.7;">
+            <div class="sync-dot"></div>
+            Sistem Bağlantısı Aktif | <span id="last-sync">--:--:--</span>
+        </div>
+
+        <div class="clock-area" style="display: flex; align-items: center; gap: 15px;">
+            <div id="digital-clock" style="font-family: 'Orbitron'; font-size: 24px; font-weight: 700;">00:00:00</div>
+            <div class="settings-trigger" onclick="openSettings()">
+                <span class="material-icons" style="font-size: 24px;">settings</span>
+            </div>
+        </div>
     </div>
 
     <!-- Settings Modal -->
