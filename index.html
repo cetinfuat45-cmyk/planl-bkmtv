@@ -38,6 +38,11 @@
             font-family: var(--global-font);
         }
 
+        html {
+            background-color: var(--bg-dark); /* Tüm sayfa arka planı */
+            height: 100%;
+        }
+
         body {
             background-color: var(--bg-dark);
             background-image: 
@@ -99,9 +104,10 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            flex: 1; /* Varsayılan olarak eşit dağıl */
+            flex: 1; 
             transition: all 0.5s ease;
             min-width: 150px;
+            height: 100%; /* Sütunlar tam boy olsun */
         }
 
         .column-panel.has-no-pending {
@@ -403,6 +409,8 @@
 
             // Tema
             const root = document.documentElement;
+            const html = document.querySelector('html');
+            
             if (s.theme === 'dark') root.style.setProperty('--bg-dark', '#020617');
             if (s.theme === 'navy') root.style.setProperty('--bg-dark', '#0f172a');
             if (s.theme === 'grey') root.style.setProperty('--bg-dark', '#334155');
@@ -422,6 +430,9 @@
                 root.style.setProperty('--modal-text', '#ffffff');
                 document.body.style.backgroundImage = ''; 
             }
+            
+            // html etiketine de rengi uygula ki zoom yapınca boşluk kalmasın
+            html.style.backgroundColor = getComputedStyle(root).getPropertyValue('--bg-dark');
             
             setTheme(s.theme);
 
