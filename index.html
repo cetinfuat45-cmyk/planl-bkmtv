@@ -100,7 +100,8 @@
 
         .column-panel {
             background: var(--panel-bg);
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--text-main); /* Yazı rengiyle aynı kenarlık */
+            opacity: 0.8;
             border-radius: 12px;
             display: flex;
             flex-direction: column;
@@ -166,7 +167,7 @@
             font-size: var(--card-fs);
             transition: all 0.4s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            border: 2px solid #000000; /* Siyah kenarlık */
+            border: 2px solid currentColor; /* Yazı rengini otomatik al */
             width: fit-content; /* Sadece metin kadar genişlik */
             min-width: 100px;   /* Çok küçük metinlerde aşırı daralmaması için */
             max-width: 95%;     /* Sütun dışına taşmaması için */
@@ -176,8 +177,7 @@
 
         .item-card.is-pending {
             background: var(--pending);
-            color: #fff;
-            border-color: #000000;
+            color: #ffffff;
         }
 
         .item-card.is-done {
@@ -204,7 +204,7 @@
             justify-content: space-between;
             font-size: 14px;
             color: var(--text-main);
-            border-bottom: 1px solid var(--glass-border); /* Alt kenarlık */
+            border-bottom: 1px solid var(--text-main); /* Yazı rengiyle aynı kenarlık */
         }
 
         .sync-info { display: flex; align-items: center; gap: 10px; }
