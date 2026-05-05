@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planlı Bakım TV - Bakım HUB</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#020617">
+    <link rel="apple-touch-icon" href="pwa_icon_512_1777956810565.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
@@ -276,9 +279,12 @@
 </head>
 <body>
     <div class="footer">
-        <div class="logo-area" style="gap: 10px;">
-            <span class="material-icons logo-icon" style="font-size: 24px;">fact_check</span>
-            <h1 style="font-family: 'Orbitron'; font-size: 16px;">PLANLI BAKIM TV</h1>
+        <div class="logo-area" style="gap: 5px; flex-direction: column; align-items: flex-start; justify-content: center;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="material-icons logo-icon" style="font-size: 24px;">fact_check</span>
+                <h1 style="font-family: 'Orbitron'; font-size: 16px;">PLANLI BAKIM TV</h1>
+            </div>
+            <div id="haftalik-gorevli-tv" style="color: #fbbf24; font-size: 11px; font-weight: 800; text-transform: uppercase;"></div>
         </div>
 
         <div class="sync-info" style="font-size: 11px; opacity: 0.7;">
@@ -289,6 +295,10 @@
         <div class="clock-area" style="display: flex; align-items: center; gap: 15px;">
             <div id="digital-clock" style="font-family: 'Orbitron'; font-size: 24px; font-weight: 700;">00:00:00</div>
             
+            <div id="install-btn" class="settings-trigger" style="display:none; color: var(--accent-aylik); font-weight: bold; border: 1px solid var(--accent-aylik); padding: 5px 10px; border-radius: 6px;" onclick="installPWA()">
+                <span class="material-icons" style="font-size: 20px;">download</span> YÜKLE
+            </div>
+
             <div class="fullscreen-btn" onclick="toggleFullscreen()">
                 <span class="material-icons" style="font-size: 24px;">fullscreen</span>
             </div>
@@ -539,6 +549,9 @@
                         renderList('list-6aylik', data.checklist.altiAylik, 'panel-6aylik');
                         renderList('list-yillik', data.checklist.yillik, 'panel-yillik');
                     }
+                    if (data.haftalikGorevli) {
+                        document.getElementById('haftalik-gorevli-tv').innerText = data.haftalikGorevli;
+                    }
                     document.getElementById('last-sync').innerText = "Son Güncelleme: " + new Date().toLocaleTimeString('tr-TR');
                 })
                 .catch(err => console.error("Hata:", err));
@@ -573,6 +586,34 @@
 
         fetchData();
         setInterval(fetchData, 60000);
+
+        // PWA Yükleme Altyapısı
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('install-btn').style.display = 'flex';
+        });
+
+        function installPWA() {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    document.getElementById('install-btn').style.display = 'none';
+                }
+                deferredPrompt = null;
+            });
+        }
+
+        // Service Worker Kaydı
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker Kayıtlı!'))
+                    .catch(err => console.log('Service Worker Hatası:', err));
+            });
+        }
     </script>
 </body>
 </html>
