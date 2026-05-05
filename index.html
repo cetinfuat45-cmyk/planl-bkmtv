@@ -709,8 +709,9 @@
                         if (data.haftalikGorevliResim) {
                             let imgUrl = data.haftalikGorevliResim;
                             const match = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-                            if (match && match[1] && !imgUrl.includes('uc?export')) {
-                                imgUrl = 'https://drive.google.com/uc?export=view&id=' + match[1];
+                            if (match && match[1]) {
+                                // uc?export yerine thumbnail API'si kullanmak daha kararlıdır
+                                imgUrl = 'https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w150-h150';
                             }
                             imgEl.src = imgUrl;
                             imgEl.style.display = 'block';
