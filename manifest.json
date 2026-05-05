@@ -2,7 +2,7 @@
   "name": "Planlı Bakım TV Panel",
   "short_name": "Bakım TV",
   "description": "Bakım HUB - Planlı Bakım Takip Sistemi",
-  "start_url": "./planl-bkmtv.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#020617",
