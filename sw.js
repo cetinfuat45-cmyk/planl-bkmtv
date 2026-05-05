@@ -1,12 +1,15 @@
-const CACHE_NAME = 'bakim-tv-v3';
+const CACHE_NAME = 'bakim-tv-v4';
 const ASSETS = [
+  './',
   './index.html',
+  './planl-bkmtv.html',
   './manifest.json',
   './pwa_icon_192_1777960576531.png',
   './pwa_icon_512_1777956810565.png'
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting(); // Anında devreye gir
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(ASSETS);
@@ -23,6 +26,7 @@ self.addEventListener('activate', event => {
       );
     })
   );
+  self.clients.claim(); // Tüm sekmelerin kontrolünü anında al
 });
 
 self.addEventListener('fetch', event => {
