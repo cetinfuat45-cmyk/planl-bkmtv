@@ -1,11 +1,11 @@
-const CACHE_NAME = 'bakim-tv-v1';
+const CACHE_NAME = 'bakim-tv-v2';
 const ASSETS = [
-  'planl-bkmtv.html',
-  'manifest.json',
-  'pwa_icon_512_1777956810565.png'
+  './planl-bkmtv.html',
+  './manifest.json',
+  './pwa_icon_192_1777960576531.png',
+  './pwa_icon_512_1777956810565.png'
 ];
 
-// Install Service Worker
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -14,7 +14,6 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate and Clean Old Caches
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -26,7 +25,6 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch Assets from Cache or Network
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
