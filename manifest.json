@@ -1,29 +1,23 @@
 {
-  "name": "Planlı Bakım TV Panel",
-  "short_name": "Bakım TV",
-  "description": "Bakım HUB - Planlı Bakım Takip Sistemi",
+  "name": "Bakım HUB",
+  "short_name": "BakımHUB",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#020617",
-  "theme_color": "#020617",
+  "background_color": "#0f172a",
+  "theme_color": "#1e293b",
+  "description": "Fabrika Arıza Takip Sistemi",
   "icons": [
     {
-      "src": "./pwa_icon_192_1777960576531.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/2092/2092063.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2092/2092063.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./pwa_icon_512_1777956810565.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./pwa_icon_512_1777956810565.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }
