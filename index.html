@@ -127,7 +127,22 @@
             /* En alta kadar uzan */
         }
 
+        .column-panel.no-records {
+            flex: 0.3;
+            min-width: 100px;
+            max-width: 200px;
+            opacity: 0.4;
+            filter: grayscale(0.5);
+        }
 
+        .column-panel.no-records .column-header {
+            font-size: 12px;
+            padding: 10px 5px;
+        }
+
+        .column-panel.no-records .list-container {
+            display: none;
+        }
 
         .column-header {
             padding: 15px;
@@ -713,8 +728,11 @@
 
             if (!items || items.length === 0) {
                 container.innerHTML = '<div style="text-align:center; color:var(--text-dim); padding:20px; font-size:12px;">Kayıt yok.</div>';
+                if (panel) panel.classList.add('no-records');
                 return;
             }
+            
+            if (panel) panel.classList.remove('no-records');
 
             // Önce BEKLEYENLER (FALSE), sonra YAPILANLAR (TRUE) gelsin
             const sorted = [...items].sort((a, b) => a.status - b.status);
