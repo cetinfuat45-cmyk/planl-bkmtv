@@ -435,7 +435,10 @@
             </div>
         </div>
 
-        <div id="haftalik-gorevli-tv" style="color: #fbbf24; font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; text-align: center;"></div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 5px;">
+            <img id="haftalik-resim-tv" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #fbbf24; display: none;" src="" alt="">
+            <div id="haftalik-gorevli-tv" style="color: #fbbf24; font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; text-align: center;"></div>
+        </div>
 
         <div class="clock-area" style="display: flex; align-items: center; gap: 15px;">
             <div id="digital-clock" style="font-family: 'Orbitron'; font-size: 24px; font-weight: 700;">00:00:00</div>
@@ -701,6 +704,19 @@
                     }
                     if (data.haftalikGorevli) {
                         document.getElementById('haftalik-gorevli-tv').innerText = data.haftalikGorevli;
+                        
+                        const imgEl = document.getElementById('haftalik-resim-tv');
+                        if (data.haftalikGorevliResim) {
+                            let imgUrl = data.haftalikGorevliResim;
+                            const match = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                            if (match && match[1] && !imgUrl.includes('uc?export')) {
+                                imgUrl = 'https://drive.google.com/uc?export=view&id=' + match[1];
+                            }
+                            imgEl.src = imgUrl;
+                            imgEl.style.display = 'block';
+                        } else {
+                            imgEl.style.display = 'none';
+                        }
                     }
                     document.getElementById('last-sync').innerText = "Son Güncelleme: " + new Date().toLocaleTimeString('tr-TR');
                 })
