@@ -1,0 +1,17 @@
+{
+  "name": "Planlı Bakım TV Panel",
+  "short_name": "Bakım TV",
+  "description": "Bakım HUB - Planlı Bakım Takip Sistemi",
+  "start_url": "planl-bkmtv.html",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "icons": [
+    {
+      "src": "pwa_icon_512_1777956810565.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
