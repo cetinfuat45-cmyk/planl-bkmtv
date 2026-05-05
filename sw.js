@@ -1,6 +1,6 @@
-const CACHE_NAME = 'bakim-tv-v2';
+const CACHE_NAME = 'bakim-tv-v3';
 const ASSETS = [
-  './planl-bkmtv.html',
+  './index.html',
   './manifest.json',
   './pwa_icon_192_1777960576531.png',
   './pwa_icon_512_1777956810565.png'
