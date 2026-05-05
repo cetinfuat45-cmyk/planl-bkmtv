@@ -250,6 +250,11 @@
         }
         .theme-btn.active { border-color: var(--accent-aylik); background: rgba(34, 211, 238, 0.1); }
 
+        .theme-preview {
+            width: 20px; height: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);
+            display: inline-block; vertical-align: middle; margin-right: 10px;
+        }
+
         .save-btn {
             background: var(--accent-aylik); color: #000; border: none;
             padding: 15px; border-radius: 12px; font-weight: 900; width: 100%;
@@ -327,11 +332,31 @@
             <div class="settings-grid">
                 <div class="setting-item">
                     <label class="setting-label">Arka Plan Teması</label>
-                    <div class="theme-selector">
-                        <div class="theme-btn" id="t-dark" onclick="setTheme('dark')">Koyu</div>
-                        <div class="theme-btn" id="t-navy" onclick="setTheme('navy')">Lacivert</div>
-                        <div class="theme-btn" id="t-grey" onclick="setTheme('grey')">Gri</div>
-                        <div class="theme-btn" id="t-white" onclick="setTheme('white')">Beyaz</div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <div id="current-theme-preview" class="theme-preview" style="width: 40px; height: 40px;"></div>
+                        <select id="theme-select" class="setting-input" onchange="updateThemePreview(this.value)">
+                            <option value="#020617">Koyu Lacivert (Standart)</option>
+                            <option value="#FF0000">Kırmızı</option>
+                            <option value="#00FFFF">Camgöbeği</option>
+                            <option value="#0000FF">Mavi</option>
+                            <option value="#00008B">Koyu Mavi</option>
+                            <option value="#ADD8E6">Açık Mavi</option>
+                            <option value="#800080">Mor</option>
+                            <option value="#FFFF00">Sarı</option>
+                            <option value="#00FF00">Kireç</option>
+                            <option value="#FF00FF">Macenta</option>
+                            <option value="#FFC0CB">Pembe</option>
+                            <option value="#FFFFFF">Beyaz</option>
+                            <option value="#C0C0C0">Gümüş</option>
+                            <option value="#808080">Gri</option>
+                            <option value="#000000">Siyah</option>
+                            <option value="#FFA500">Turuncu</option>
+                            <option value="#A52A2A">Kahverengi</option>
+                            <option value="#800000">Bordo</option>
+                            <option value="#008000">Yeşil</option>
+                            <option value="#808000">Zeytin</option>
+                            <option value="#7FFFD4">Akuamarin</option>
+                        </select>
                     </div>
                 </div>
 
@@ -392,25 +417,22 @@
         const API_URL = 'https://script.google.com/macros/s/AKfycbzSM87-ojx-OLD4MMoiRenA3wzU2CKrog-kDA9LDM1JV-nQAX1dXqimEH4fAw2l-fNP/exec';
 
         // Ayarlar İşlemleri
-        let currentTheme = 'dark';
-
         function openSettings() {
             document.getElementById('settings-modal').style.display = 'flex';
+            updateThemePreview(document.getElementById('theme-select').value);
         }
 
         function closeSettings() {
             document.getElementById('settings-modal').style.display = 'none';
         }
 
-        function setTheme(t) {
-            currentTheme = t;
-            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('t-' + t).classList.add('active');
+        function updateThemePreview(color) {
+            document.getElementById('current-theme-preview').style.backgroundColor = color;
         }
 
         function saveSettings() {
             const settings = {
-                theme: currentTheme,
+                theme: document.getElementById('theme-select').value,
                 font: document.getElementById('font-select').value,
                 weight: document.getElementById('weight-select').value,
                 viewMode: document.getElementById('view-mode-select').value,
@@ -423,37 +445,43 @@
             closeSettings();
         }
 
+        function getBrightness(hexColor) {
+            hexColor = hexColor.replace('#', '');
+            const r = parseInt(hexColor.substr(0, 2), 16);
+            const g = parseInt(hexColor.substr(2, 2), 16);
+            const b = parseInt(hexColor.substr(4, 2), 16);
+            return (r * 299 + g * 587 + b * 114) / 1000;
+        }
+
         function applySettings() {
             const saved = localStorage.getItem('tv_settings');
             if (!saved) return;
             const s = JSON.parse(saved);
-
-            // Tema
             const root = document.documentElement;
-            const html = document.querySelector('html');
+
+            // Tema ve Renk Mantığı
+            const bgColor = s.theme || '#020617';
+            root.style.setProperty('--bg-dark', bgColor);
             
-            if (s.theme === 'dark') root.style.setProperty('--bg-dark', '#020617');
-            if (s.theme === 'navy') root.style.setProperty('--bg-dark', '#0f172a');
-            if (s.theme === 'grey') root.style.setProperty('--bg-dark', '#334155');
-            if (s.theme === 'white') {
-                root.style.setProperty('--bg-dark', '#ffffff');
+            const brightness = getBrightness(bgColor);
+            if (brightness > 125) {
+                // Açık Renk Arka Plan
                 root.style.setProperty('--text-main', '#000000');
-                root.style.setProperty('--panel-bg', '#f1f5f9');
-                root.style.setProperty('--header-bg', '#ffffff');
+                root.style.setProperty('--panel-bg', 'rgba(0,0,0,0.05)');
+                root.style.setProperty('--header-bg', 'rgba(0,0,0,0.02)');
                 root.style.setProperty('--modal-bg', '#ffffff');
                 root.style.setProperty('--modal-text', '#000000');
                 document.body.style.backgroundImage = 'none';
             } else {
+                // Koyu Renk Arka Plan
                 root.style.setProperty('--text-main', '#f8fafc');
-                root.style.setProperty('--panel-bg', 'rgba(15, 23, 42, 0.8)');
+                root.style.setProperty('--panel-bg', 'rgba(255, 255, 255, 0.05)');
                 root.style.setProperty('--header-bg', 'rgba(0, 0, 0, 0.4)');
                 root.style.setProperty('--modal-bg', '#1e293b');
                 root.style.setProperty('--modal-text', '#ffffff');
                 document.body.style.backgroundImage = ''; 
             }
             
-            setTheme(s.theme);
-
             // CSS Değişkenleri
             root.style.setProperty('--global-font', s.font);
             root.style.setProperty('--global-weight', s.weight);
@@ -469,6 +497,7 @@
             document.body.style.zoom = s.zoom;
 
             // Formu Güncelle
+            document.getElementById('theme-select').value = bgColor;
             document.getElementById('font-select').value = s.font;
             document.getElementById('weight-select').value = s.weight;
             document.getElementById('view-mode-select').value = s.viewMode || 'card';
@@ -477,6 +506,7 @@
             document.getElementById('s-card-op').value = s.cardOp;
             document.getElementById('v-card-op').innerText = Math.round(s.cardOp*100)+'%';
             document.getElementById('zoom-select').value = s.zoom;
+            updateThemePreview(bgColor);
         }
 
         // İlk Yükleme
