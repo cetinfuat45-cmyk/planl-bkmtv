@@ -158,6 +158,17 @@
 
         .list-container::-webkit-scrollbar { width: 6px; }
         .list-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        /* Görünüm Modları */
+        .dashboard-grid.row-mode .list-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .dashboard-grid.row-mode .item-card {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 5px;
+        }
+
         .item-card {
             border-radius: 0px; /* Köşeli yapı */
             padding: 12px 18px;
@@ -343,6 +354,14 @@
                 </div>
 
                 <div class="setting-item">
+                    <label class="setting-label">Görünüm Modu</label>
+                    <select id="view-mode-select" class="setting-input">
+                        <option value="card">Kart Görünümü (Yan Yana)</option>
+                        <option value="row">Satır Görünümü (Liste)</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
                     <label class="setting-label">Kart Yazı Boyutu: <span id="v-card-fs">16px</span></label>
                     <input type="range" id="s-card-fs" min="10" max="40" value="16" class="setting-input" oninput="document.getElementById('v-card-fs').innerText = this.value+'px'">
                 </div>
@@ -394,6 +413,7 @@
                 theme: currentTheme,
                 font: document.getElementById('font-select').value,
                 weight: document.getElementById('weight-select').value,
+                viewMode: document.getElementById('view-mode-select').value,
                 cardFs: document.getElementById('s-card-fs').value + 'px',
                 cardOp: document.getElementById('s-card-op').value,
                 zoom: document.getElementById('zoom-select').value
@@ -440,12 +460,18 @@
             root.style.setProperty('--card-fs', s.cardFs);
             root.style.setProperty('--card-opacity', s.cardOp);
             
+            // Görünüm Modu
+            const grid = document.querySelector('.dashboard-grid');
+            if (s.viewMode === 'row') grid.classList.add('row-mode');
+            else grid.classList.remove('row-mode');
+
             // Zoom
             document.body.style.zoom = s.zoom;
 
             // Formu Güncelle
             document.getElementById('font-select').value = s.font;
             document.getElementById('weight-select').value = s.weight;
+            document.getElementById('view-mode-select').value = s.viewMode || 'card';
             document.getElementById('s-card-fs').value = parseInt(s.cardFs);
             document.getElementById('v-card-fs').innerText = s.cardFs;
             document.getElementById('s-card-op').value = s.cardOp;
